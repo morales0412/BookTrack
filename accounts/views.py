@@ -8,7 +8,7 @@ from django.contrib.auth import login
 
 class RegisterView(CreateView):
     form_class = CustomerUserCreationForm
-    template_name = "accounts/register.html"
+    template_name = "registration/register.html"
 
     def form_valid(self, form):
         user = form.save()
@@ -18,7 +18,7 @@ class RegisterView(CreateView):
 
 class LoginView(LoginView):
     form_class = CustomerAuthenticationForm
-    template_name = "accounts/login.html"
+    template_name = "registration/login.html"
 
 
 class LogoutView(LogoutView):
