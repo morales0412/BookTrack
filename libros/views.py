@@ -28,3 +28,12 @@ class BookListView(LoginRequiredMixin, ListView):
         if status:
             queryset = queryset.filter(status=status)
         return queryset
+
+
+class BookDetailView(LoginRequiredMixin, DetailView):
+    model = Book
+    template_name = "libros/detalle_libro.html"
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return queryset.filter(user=self.request.user)
