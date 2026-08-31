@@ -37,3 +37,14 @@ class BookDetailView(LoginRequiredMixin, DetailView):
     def get_queryset(self):
         queryset = super().get_queryset()
         return queryset.filter(user=self.request.user)
+
+
+class BookCreateView(LoginRequiredMixin, CreateView):
+    model = Book
+    template_name = "libros/crear_libro.html"
+    form_class = BookForm
+    success_url = reverse_lazy("listar_libros")
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
