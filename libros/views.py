@@ -59,3 +59,13 @@ class BookUpdateView(LoginRequiredMixin, UpdateView):
     def get_queryset(self):
         queryset = super().get_queryset()
         return queryset.filter(user=self.request.user)
+
+
+class BookDeleteView(LoginRequiredMixin, DeleteView):
+    model = Book
+    template_name = "libros/eliminar_libro.html"
+    success_url = reverse_lazy("listar_libros")
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return queryset.filter(user=self.request.user)
