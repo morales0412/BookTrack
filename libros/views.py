@@ -11,3 +11,20 @@ from django.views.generic import (
 from django.urls import reverse_lazy
 from .forms import BookForm
 # Create your views here.
+
+
+class BookListView(LoginRequiredMixin, ListView):
+    model = Book
+    template_name = "libros/listar_libros.html"
+    form_class = BookForm
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        queryset = queryset.filter(user=self.request.user)
+        busqueda = self.request.GET.get("busqueda")
+        status = self.request.GET.get("opcion_lectura")
+        if busqueda:
+            queryset = queryset.filter(title__icontains=busqueda)
+        if status:
+            queryset = queryset.filter(status=status)
+        return queryset
